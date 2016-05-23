@@ -10,6 +10,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 import org.medline.MedlineCitation;
 
 import com.pengyifan.bioc.BioCCollection;
@@ -28,6 +29,8 @@ import edu.ucdenver.ccp.medline.xml.MedlineXmlParser;
  * format.
  */
 public class MedlineXml2BioC {
+
+	private static final Logger logger = Logger.getLogger(MedlineXml2BioC.class);
 
 	private static final String BIOC_COLLECTION_SOURCE = "medline";
 
@@ -52,6 +55,8 @@ public class MedlineXml2BioC {
 	 */
 	public static void processMedlineXmlFile(File medlineXmlFile, File baseOutputDirectory) throws IOException,
 			XMLStreamException, JAXBException {
+
+		logger.info("BioC conversion in progress for: " + medlineXmlFile.getAbsolutePath());
 
 		for (MedlineXmlParser parser = new MedlineXmlParser(medlineXmlFile); parser.hasNext();) {
 			MedlineCitation citation = parser.next();
@@ -81,10 +86,6 @@ public class MedlineXml2BioC {
 			collectionWriter.close();
 		}
 
-		// add method to process a directory of xml files using the file orderer
-		// git commit
-		// write a jenkins job to process the medline base set
-		// start job
 	}
 
 	/**

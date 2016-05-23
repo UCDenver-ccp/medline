@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>edu.ucdenver.ccp</groupId>
+		<artifactId>medline-parent</artifactId>
+		<version>2016.0-SNAPSHOT</version>
+		<relativePath>../medline-parent</relativePath>
+	</parent>
+	<artifactId>medline-bioc</artifactId>
+
+	<dependencies>
+		<!-- http://mvnrepository.com/artifact/com.pengyifan.bioc/pengyifan-bioc -->
+		<dependency>
+			<groupId>com.pengyifan.bioc</groupId>
+			<artifactId>pengyifan-bioc</artifactId>
+			<version>1.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.ucdenver.ccp</groupId>
+			<artifactId>medline-core</artifactId>
+			<version>${version}</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.ucdenver.ccp</groupId>
+			<artifactId>medline-xml</artifactId>
+			<version>${version}</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.ucdenver.ccp</groupId>
+			<artifactId>medline-xml</artifactId>
+			<version>${version}</version>
+			<type>test-jar</type>
+		</dependency>
+		<dependency>
+			<groupId>edu.ucdenver.ccp</groupId>
+			<artifactId>common</artifactId>
+			<type>test-jar</type>
+		</dependency>
+	</dependencies>
+
+</project>

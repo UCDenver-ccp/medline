@@ -60,7 +60,7 @@ public class MedlineXml2BioC {
 		int count = 0;
 		for (MedlineXmlParser parser = new MedlineXmlParser(medlineXmlFile); parser.hasNext();) {
 			if (count++ % 10000 == 0) {
-				logger.info("conversion progress: " + (count -1));
+				logger.info("conversion progress: " + (count - 1));
 			}
 			MedlineCitation citation = parser.next();
 			int pmid = Integer.parseInt(citation.getPMID().getvalue());
@@ -72,10 +72,13 @@ public class MedlineXml2BioC {
 			titlePassage.setOffset(0);
 			titlePassage.setText(title);
 			document.addPassage(titlePassage);
-			BioCPassage abstractPassage = new BioCPassage();
-			abstractPassage.setOffset(title.length() + 1);
-			abstractPassage.setText(abstractText);
-			document.addPassage(abstractPassage);
+
+			if (abstractText != null) {
+				BioCPassage abstractPassage = new BioCPassage();
+				abstractPassage.setOffset(title.length() + 1);
+				abstractPassage.setText(abstractText);
+				document.addPassage(abstractPassage);
+			}
 
 			BioCCollection collection = new BioCCollection(BIOC_COLLECTION_SOURCE, medlineXmlFile.getName());
 			collection.addDocument(document);

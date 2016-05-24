@@ -28,7 +28,7 @@ while getopts "i:o:h" OPTION; do
     esac
 done
 
-if [[ -z $INPUT_FILE_OR_DIR || -z $BASE_OUTPUT_DIR || -z $MAVEN_HOME]]; then
+if [[ -z $INPUT_FILE_OR_DIR || -z $BASE_OUTPUT_DIR || -z $MAVEN_HOME ]]; then
 	echo "missing input arguments!!!!!"
     print_usage
     exit 1

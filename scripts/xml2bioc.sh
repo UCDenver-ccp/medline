@@ -10,6 +10,7 @@ function print_usage {
     echo "$(basename $0) [OPTIONS]"
     echo "  [-i <input file or directory>]: the Medline XML file or directory containing Medline XML files to process"
     echo "  [-o <base output directory>]: base output directory where the BioC formatted files will be created"
+    echo " Also requires MAVEN_HOME environment variable to be set."
 
 }
 
@@ -27,7 +28,7 @@ while getopts "i:o:h" OPTION; do
     esac
 done
 
-if [[ -z $INPUT_FILE_OR_DIR || -z $BASE_OUTPUT_DIR ]]; then
+if [[ -z $INPUT_FILE_OR_DIR || -z $BASE_OUTPUT_DIR || -z $MAVEN_HOME]]; then
 	echo "missing input arguments!!!!!"
     print_usage
     exit 1
@@ -40,6 +41,6 @@ fi
 
 PATH_TO_ME=`pwd`
 
-mvn -e -f scripts/pom-files/pom-medline-xml2bioc.xml exec:exec \
+$MAVEN_HOME/bin/mvn -e -f scripts/pom-files/pom-medline-xml2bioc.xml exec:exec \
         -xmlFileOrDirectory=$INPUT_FILE_OR_DIR \
         -baseOutputDirectory=$BASE_OUTPUT_DIR

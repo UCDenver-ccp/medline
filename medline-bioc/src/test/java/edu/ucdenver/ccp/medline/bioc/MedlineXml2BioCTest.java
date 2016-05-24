@@ -68,7 +68,11 @@ public class MedlineXml2BioCTest extends DefaultTestCase {
 			assertEquals(1, collection.getDocmentCount());
 			BioCDocument document = collection.getDocument(0);
 			String id = document.getID();
-			assertEquals(2, document.getPassageCount());
+			if (id.equals("10970178")) {
+				assertEquals(1, document.getPassageCount());
+			} else {
+				assertEquals(2, document.getPassageCount());
+			}
 			BioCPassage titlePassage = document.getPassage(0);
 			if (titlePassage.getText().isPresent()) {
 				String titleText = titlePassage.getText().get();
@@ -76,12 +80,14 @@ public class MedlineXml2BioCTest extends DefaultTestCase {
 			} else {
 				assertNull(pmid2TitleMap.get(id));
 			}
-			BioCPassage abstractPassage = document.getPassage(1);
-			if (abstractPassage.getText().isPresent()) {
-				String abstractText = abstractPassage.getText().get();
-				assertEquals(pmid2AbstractMap.get(id), abstractText);
-			} else {
-				assertNull(pmid2AbstractMap.get(id));
+			if (!id.equals("10970178")) {
+				BioCPassage abstractPassage = document.getPassage(1);
+				if (abstractPassage.getText().isPresent()) {
+					String abstractText = abstractPassage.getText().get();
+					assertEquals(pmid2AbstractMap.get(id), abstractText);
+				} else {
+					assertNull(pmid2AbstractMap.get(id));
+				}
 			}
 			cr.close();
 		}

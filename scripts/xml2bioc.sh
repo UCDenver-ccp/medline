@@ -42,5 +42,5 @@ fi
 PATH_TO_ME=`pwd`
 
 $MAVEN_HOME/bin/mvn -e -f scripts/pom-files/pom-medline-xml2bioc.xml exec:exec \
-        -xmlFileOrDirectory=$INPUT_FILE_OR_DIR \
-        -baseOutputDirectory=$BASE_OUTPUT_DIR
+        -DxmlFileOrDirectory=$INPUT_FILE_OR_DIR \
+        -DbaseOutputDirectory=$BASE_OUTPUT_DIR

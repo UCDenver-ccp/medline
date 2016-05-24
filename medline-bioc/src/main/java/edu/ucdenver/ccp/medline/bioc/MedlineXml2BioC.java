@@ -57,8 +57,11 @@ public class MedlineXml2BioC {
 			XMLStreamException, JAXBException {
 
 		logger.info("BioC conversion in progress for: " + medlineXmlFile.getAbsolutePath());
-
+		int count = 0;
 		for (MedlineXmlParser parser = new MedlineXmlParser(medlineXmlFile); parser.hasNext();) {
+			if (count++ % 10000 == 0) {
+				logger.info("conversion progress: " + (count -1));
+			}
 			MedlineCitation citation = parser.next();
 			int pmid = Integer.parseInt(citation.getPMID().getvalue());
 			String title = citation.getArticle().getArticleTitle();

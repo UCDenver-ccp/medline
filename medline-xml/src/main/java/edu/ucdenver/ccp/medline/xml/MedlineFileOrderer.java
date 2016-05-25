@@ -30,6 +30,7 @@
 package edu.ucdenver.ccp.medline.xml;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -70,10 +71,19 @@ public class MedlineFileOrderer {
 	 *         so on.
 	 */
 	public static Iterable<File> getOrderedMedlineFileIterable(File directory, final FileOrder fileOrder) {
+		final Pattern medlineFilePattern = Pattern.compile("^medline\\d\\dn(\\d\\d\\d\\d)\\.xml\\.?g?z?$");
 		List<File> files = Arrays.asList(directory.listFiles());
-		Collections.sort(files, new Comparator<File>() {
-
-			private final Pattern medlineFilePattern = Pattern.compile("^medline\\d\\dn(\\d\\d\\d\\d)\\.xml\\.?g?z?$");
+		
+		/* remove any irrelevant files, e.g. md5 files */
+		List<File> medlineFiles = new ArrayList<File>();
+		for (File f : files) {
+			Matcher m = medlineFilePattern.matcher(f.getName());
+			if (m.find()) {
+				medlineFiles.add(f);
+			}
+		}
+		
+		Collections.sort(medlineFiles, new Comparator<File>() {
 
 			public int compare(File f1, File f2) {
 				Integer f1Number = null;
@@ -103,7 +113,7 @@ public class MedlineFileOrderer {
 				return orderer * f1Number.compareTo(f2Number);
 			}
 		});
-		return files;
+		return medlineFiles;
 	}
 
 }

@@ -87,7 +87,7 @@ public class MedlineFileOrdererTest extends DefaultTestCase {
 	public void testIncreasingOrder() {
 		List<File> orderedFiles = CollectionsUtil.createList(MedlineFileOrderer.getOrderedMedlineFileIterable(
 				folder.getRoot()).iterator());
-		assertEquals(7, orderedFiles.size());
+		assertEquals(5, orderedFiles.size());
 		assertEquals(MEDLINE12N0001_XML, orderedFiles.get(0).getName());
 		assertEquals(MEDLINE12N0002_XML, orderedFiles.get(1).getName());
 		assertEquals(MEDLINE12N0010_XML, orderedFiles.get(2).getName());
@@ -99,7 +99,7 @@ public class MedlineFileOrdererTest extends DefaultTestCase {
 	public void testDecreasingOrder() {
 		List<File> orderedFiles = CollectionsUtil.createList(MedlineFileOrderer.getOrderedMedlineFileIterable(
 				folder.getRoot(), FileOrder.DEC).iterator());
-		assertEquals(7, orderedFiles.size());
+		assertEquals(5, orderedFiles.size());
 		assertEquals(MEDLINE12N0890_XML, orderedFiles.get(0).getName());
 		assertEquals(MEDLINE12N0645_XML, orderedFiles.get(1).getName());
 		assertEquals(MEDLINE12N0010_XML, orderedFiles.get(2).getName());

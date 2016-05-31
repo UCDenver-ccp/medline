@@ -24,6 +24,7 @@ import com.pengyifan.bioc.io.BioCCollectionReader;
 
 import edu.ucdenver.ccp.common.collections.CollectionsUtil;
 import edu.ucdenver.ccp.common.test.DefaultTestCase;
+import edu.ucdenver.ccp.medline.bioc.MedlineXml2BioC.OutputSegmentation;
 import edu.ucdenver.ccp.medline.xml.MedlineXmlParserTest;
 
 public class MedlineXml2BioCTest extends DefaultTestCase {
@@ -54,7 +55,8 @@ public class MedlineXml2BioCTest extends DefaultTestCase {
 	public void testXml2BioCConversion() throws IOException, XMLStreamException, JAXBException {
 		File sampleMedlineXmlFile = copyClasspathResourceToTemporaryFile(MedlineXmlParserTest.class, SAMPLE_FILE_NAME);
 		File baseOutputDirectory = folder.newFolder();
-		MedlineXml2BioC.processMedlineXmlFile(sampleMedlineXmlFile, baseOutputDirectory);
+		MedlineXml2BioC.processMedlineXmlFile(sampleMedlineXmlFile, baseOutputDirectory,
+				OutputSegmentation.ONE_FILE_PER_PUBMED_ID);
 
 		List<File> expectedOutputFileList = CollectionsUtil.createList(new File(baseOutputDirectory,
 				"10/787/10787327.bioc.xml.gz"), new File(baseOutputDirectory, "10/847/10847728.bioc.xml.gz"), new File(
@@ -89,6 +91,27 @@ public class MedlineXml2BioCTest extends DefaultTestCase {
 					assertNull(pmid2AbstractMap.get(id));
 				}
 			}
+			cr.close();
+		}
+
+	}
+
+	@Test
+	public void testXml2BioCConversion_SingleOutputFile() throws IOException, XMLStreamException, JAXBException {
+		File sampleMedlineXmlFile = copyClasspathResourceToTemporaryFile(MedlineXmlParserTest.class, SAMPLE_FILE_NAME);
+		File baseOutputDirectory = folder.newFolder();
+		MedlineXml2BioC.processMedlineXmlFile(sampleMedlineXmlFile, baseOutputDirectory,
+				OutputSegmentation.ONE_OUTPUT_FILE_PER_INPUT_XML_FILE);
+
+		List<File> expectedOutputFileList = CollectionsUtil.createList(new File(baseOutputDirectory,
+				"medline-xml-sample-2016.bioc.xml.gz"));
+
+		/* check that expected output files exist */
+		for (File f : expectedOutputFileList) {
+			assertTrue(f.exists());
+			BioCCollectionReader cr = new BioCCollectionReader(new GZIPInputStream(new FileInputStream(f)));
+			BioCCollection collection = cr.readCollection();
+			assertEquals(3, collection.getDocmentCount());
 			cr.close();
 		}
 

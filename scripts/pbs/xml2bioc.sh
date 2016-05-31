@@ -33,5 +33,5 @@ echo "JAVA HOME: ${JAVA_HOME}"
 
 $MAVEN_HOME/bin/mvn -version
 jobs/nlp-tasks/medline.git/scripts/pbs/xml2bioc.sh \
--i "$INPUT_DIRECTORY/medline16n000$INDEX.xml.gz" \
+-i $INPUT_DIRECTORY \
 -o $OUTPUT_DIRECTORY

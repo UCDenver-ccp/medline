@@ -25,6 +25,7 @@
 JAVA_HOME=/Users/wiba1694/tools/jdk1.8.0_73
 INDEX=${PBS_ARRAYID}
 MAVEN_HOME=/Users/wiba1694/tools/apache-maven-3.2.2
+MAVEN OPTS="-Xmx10G -Dmaven.repo.local=/scratch/Users/wiba1694/m2"
 
 INPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016/0001-0009"
 OUTPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016-gnormplus"

@@ -15,7 +15,7 @@ function print_usage {
 
 }
 
-while getopts "i:o:m:h" OPTION; do
+while getopts "i:o:m:s:h" OPTION; do
     case $OPTION in
         # Medline XML file or directory of Medline XML files to process
         i) INPUT_FILE_OR_DIR=$OPTARG
@@ -35,7 +35,7 @@ while getopts "i:o:m:h" OPTION; do
     esac
 done
 
-if [[ -z $INPUT_FILE_OR_DIR || -z $BASE_OUTPUT_DIR || -z $MAVEN_HOME ]]; then
+if [[ -z $INPUT_FILE_OR_DIR || -z $BASE_OUTPUT_DIR || -z $OUTPUT_SEGMENTATION || -z $MAVEN_HOME ]]; then
 	echo "missing input arguments!!!!!"
     print_usage
     echo "input_file_or_dir=$INPUT_FILE_OR_DIR"

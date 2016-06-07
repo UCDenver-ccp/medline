@@ -6,7 +6,7 @@
 #PBS -k oe
 
 # Set the number of nodes, processors per node, memory limit, and maximum wallclock time
-#PBS -l nodes=1:ppn=5,mem=15gb,walltime=4:00:00
+#PBS -l nodes=1:ppn=15,mem=15gb,walltime=4:00:00
 
 # Send mail to me
 #PBS -M william.baumgartner@ucdenver.edu
@@ -27,7 +27,7 @@ INDEX=${PBS_ARRAYID}
 MAVEN_HOME=/Users/wiba1694/tools/apache-maven-3.2.2
 MAVEN_OPTS="-Xmx10G -Dmaven.repo.local=/scratch/Users/wiba1694/m2"
 
-INPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016/0001-0009"
+INPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016"
 OUTPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016-gnormplus"
 OUTPUT_SEGMENTATION=ONE_OUTPUT_FILE_PER_INPUT_XML_FILE
 echo "MAVEN OPTS: ${MAVEN_OPTS}"

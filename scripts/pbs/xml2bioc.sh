@@ -30,6 +30,8 @@ INPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016/0001-0009
 OUTPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016-gnormplus"
 echo "MAVEN OPTS: ${MAVEN_OPTS}"
 echo "JAVA HOME: ${JAVA_HOME}"
+PATH_TO_ME=`pwd`
+echo "PATH_TO_ME: $PATH_TO_ME"
 
 $MAVEN_HOME/bin/mvn -version
 jobs/nlp-tasks/medline.git/scripts/pbs/xml2bioc.sh \

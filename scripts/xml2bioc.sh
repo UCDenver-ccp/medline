@@ -31,6 +31,9 @@ done
 if [[ -z $INPUT_FILE_OR_DIR || -z $BASE_OUTPUT_DIR || -z $MAVEN_HOME ]]; then
 	echo "missing input arguments!!!!!"
     print_usage
+    echo "input_file_or_dir=$INPUT_FILE_OR_DIR"
+    echo "base_output_dir=$BASE_OUTPUT_DIR"
+    echo "maven_home=$MAVEN_HOME"
     exit 1
 fi
 

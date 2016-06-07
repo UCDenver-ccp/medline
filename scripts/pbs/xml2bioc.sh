@@ -34,7 +34,7 @@ echo "JAVA HOME: ${JAVA_HOME}"
 PATH_TO_ME=`pwd`
 echo "PATH_TO_ME: $PATH_TO_ME"
 
-$MAVEN_HOME/bin/mvn -version
-jobs/nlp-tasks/medline.git/scripts/pbs/xml2bioc.sh \
--i $INPUT_DIRECTORY \
--o $OUTPUT_DIRECTORY
+#$MAVEN_HOME/bin/mvn -version
+#jobs/nlp-tasks/medline.git/scripts/pbs/xml2bioc.sh \
+#-i $INPUT_DIRECTORY \
+#-o $OUTPUT_DIRECTORY

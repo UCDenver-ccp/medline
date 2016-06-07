@@ -29,6 +29,7 @@ MAVEN_OPTS="-Xmx10G -Dmaven.repo.local=/scratch/Users/wiba1694/m2"
 
 INPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016/0001-0009"
 OUTPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016-gnormplus"
+OUTPUT_SEGMENTATION=ONE_OUTPUT_FILE_PER_INPUT_XML_FILE
 echo "MAVEN OPTS: ${MAVEN_OPTS}"
 echo "JAVA HOME: ${JAVA_HOME}"
 PATH_TO_ME=`pwd`
@@ -39,5 +40,6 @@ cd jobs/nlp-tasks/medline.git
 ./scripts/xml2bioc.sh \
 -i $INPUT_DIRECTORY \
 -o $OUTPUT_DIRECTORY \
+-s $OUTPUT_SEGMENTATION \
 -m $MAVEN_HOME
 

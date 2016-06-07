@@ -33,12 +33,13 @@
 				<configuration>
 					<executable>java</executable>
 					<arguments>
-						<argument>-Xmx2G</argument>
+						<argument>-Xmx10G</argument>
 						<argument>-classpath</argument>
 						<classpath />
 						<argument>edu.ucdenver.ccp.medline.bioc.MedlineXml2BioC</argument>
 						<argument>${xmlFileOrDirectory}</argument> <!-- medline XML file or directory to process -->
 						<argument>${baseOutputDirectory}</argument> <!-- base output directory -->
+						<argument>${outputSegmentation}</argument> <!-- ONE_FILE_PER_PUBMED_ID, ONE_OUTPUT_FILE_PER_INPUT_XML_FILE -->
 					</arguments>
 				</configuration>
 			</plugin>

@@ -23,6 +23,9 @@ while getopts "i:o:m:h" OPTION; do
         # base output directory
         o) BASE_OUTPUT_DIR=$OPTARG
         ;;
+        # output segmentation = 
+        s) OUTPUT_SEGMENTATION=$OPTARG
+        ;;
         # maven home directory
         m) MAVEN_HOME=$OPTARG
         ;;
@@ -37,6 +40,7 @@ if [[ -z $INPUT_FILE_OR_DIR || -z $BASE_OUTPUT_DIR || -z $MAVEN_HOME ]]; then
     print_usage
     echo "input_file_or_dir=$INPUT_FILE_OR_DIR"
     echo "base_output_dir=$BASE_OUTPUT_DIR"
+    echo "output_segmentation=$OUTPUT_SEGMENTATION"
     echo "maven_home=$MAVEN_HOME"
     exit 1
 fi
@@ -50,4 +54,6 @@ PATH_TO_ME=`pwd`
 
 $MAVEN_HOME/bin/mvn -e -f scripts/pom-files/pom-medline-xml2bioc.xml exec:exec \
         -DxmlFileOrDirectory=$INPUT_FILE_OR_DIR \
-        -DbaseOutputDirectory=$BASE_OUTPUT_DIR
+        -DbaseOutputDirectory=$BASE_OUTPUT_DIR \
+        -DoutputSegmentation=$OUTPUT_SEGMENTATION
+

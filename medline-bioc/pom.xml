@@ -19,17 +19,17 @@
 		<dependency>
 			<groupId>edu.ucdenver.ccp</groupId>
 			<artifactId>medline-core</artifactId>
-			<version>${version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>edu.ucdenver.ccp</groupId>
 			<artifactId>medline-xml</artifactId>
-			<version>${version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>edu.ucdenver.ccp</groupId>
 			<artifactId>medline-xml</artifactId>
-			<version>${version}</version>
+			<version>${project.version}</version>
 			<type>test-jar</type>
 		</dependency>
 		<dependency>

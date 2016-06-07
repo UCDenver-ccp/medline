@@ -10,17 +10,21 @@ function print_usage {
     echo "$(basename $0) [OPTIONS]"
     echo "  [-i <input file or directory>]: the Medline XML file or directory containing Medline XML files to process"
     echo "  [-o <base output directory>]: base output directory where the BioC formatted files will be created"
+    echo "  [-m <maven home>]: maven home directory"
     echo " Also requires MAVEN_HOME environment variable to be set."
 
 }
 
-while getopts "i:o:h" OPTION; do
+while getopts "i:o:m:h" OPTION; do
     case $OPTION in
         # Medline XML file or directory of Medline XML files to process
         i) INPUT_FILE_OR_DIR=$OPTARG
         ;;
         # base output directory
         o) BASE_OUTPUT_DIR=$OPTARG
+        ;;
+        # maven home directory
+        m) MAVEN_HOME=$OPTARG
         ;;
         # HELP!
         h) print_usage; exit 0

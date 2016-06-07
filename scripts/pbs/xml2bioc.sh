@@ -37,4 +37,6 @@ echo "PATH_TO_ME: $PATH_TO_ME"
 $MAVEN_HOME/bin/mvn -version
 jobs/nlp-tasks/medline.git/scripts/xml2bioc.sh \
 -i $INPUT_DIRECTORY \
--o $OUTPUT_DIRECTORY
+-o $OUTPUT_DIRECTORY \
+-m $MAVEN_HOME
+

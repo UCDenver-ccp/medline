@@ -80,14 +80,20 @@ public class MedlineXml2BioC {
 			BioCPassage titlePassage = new BioCPassage();
 			titlePassage.setOffset(0);
 			titlePassage.setText(title);
+			titlePassage.putInfon("type", "title");
 			document.addPassage(titlePassage);
 
+			/*
+			 * add a second passage regardless. the GNormPlus code seems to fail
+			 * if there aren't at least two passages for a given document
+			 */
+			BioCPassage abstractPassage = new BioCPassage();
+			abstractPassage.setOffset(title.length() + 1);
 			if (abstractText != null) {
-				BioCPassage abstractPassage = new BioCPassage();
-				abstractPassage.setOffset(title.length() + 1);
+				abstractPassage.putInfon("type", "abstract");
 				abstractPassage.setText(abstractText);
-				document.addPassage(abstractPassage);
 			}
+			document.addPassage(abstractPassage);
 
 			if (outputSegmentation == OutputSegmentation.ONE_FILE_PER_PUBMED_ID) {
 				BioCCollection singlePmidCollection = new BioCCollection(BIOC_COLLECTION_SOURCE,

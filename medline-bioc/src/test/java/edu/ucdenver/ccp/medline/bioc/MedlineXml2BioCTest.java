@@ -71,7 +71,7 @@ public class MedlineXml2BioCTest extends DefaultTestCase {
 			BioCDocument document = collection.getDocument(0);
 			String id = document.getID();
 			if (id.equals("10970178")) {
-				assertEquals(1, document.getPassageCount());
+				assertEquals(2, document.getPassageCount());
 			} else {
 				assertEquals(2, document.getPassageCount());
 			}

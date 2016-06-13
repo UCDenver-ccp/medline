@@ -27,16 +27,18 @@ INDEX=${PBS_ARRAYID}
 MAVEN_HOME=/Users/wiba1694/tools/apache-maven-3.2.2
 MAVEN_OPTS="-Xmx10G -Dmaven.repo.local=/scratch/Users/wiba1694/m2"
 
-INPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016"
-OUTPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016-bioc"
-OUTPUT_SEGMENTATION=ONE_OUTPUT_FILE_PER_INPUT_XML_FILE
-#OUTPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016-bioc-one-per-pmid"
-#OUTPUT_SEGMENTATION=ONE_FILE_PER_PUBMED_ID
+INPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016-xml.list.$INDEX"
+#OUTPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016-bioc"
+#OUTPUT_SEGMENTATION=ONE_OUTPUT_FILE_PER_INPUT_XML_FILE
+OUTPUT_DIRECTORY="/scratch/Users/wiba1694/corpora/medline/baseline-2016-bioc-one-per-pmid"
+OUTPUT_SEGMENTATION=ONE_FILE_PER_PUBMED_ID
+BIOC_LOG_FILE="/scratch/Users/wiba1694/corpora/medline/baseline-bioc-paths/baseline-bioc-paths.$INDEX"
 
 echo "MAVEN OPTS: ${MAVEN_OPTS}"
 echo "JAVA HOME: ${JAVA_HOME}"
 PATH_TO_ME=`pwd`
 echo "PATH_TO_ME: $PATH_TO_ME"
+echo "INPUT: $INPUT_DIRECTORY"
 
 $MAVEN_HOME/bin/mvn -version
 cd jobs/nlp-tasks/medline.git
@@ -44,5 +46,7 @@ cd jobs/nlp-tasks/medline.git
 -i $INPUT_DIRECTORY \
 -o $OUTPUT_DIRECTORY \
 -s $OUTPUT_SEGMENTATION \
--m $MAVEN_HOME
+-m $MAVEN_HOME \
+-f $BIOC_LOG_FILE \
+-l
 

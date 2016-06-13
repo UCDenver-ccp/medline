@@ -40,6 +40,8 @@
 						<argument>${xmlFileOrDirectory}</argument> <!-- medline XML file or directory to process -->
 						<argument>${baseOutputDirectory}</argument> <!-- base output directory -->
 						<argument>${outputSegmentation}</argument> <!-- ONE_FILE_PER_PUBMED_ID, ONE_OUTPUT_FILE_PER_INPUT_XML_FILE -->
+						<argument>${biocLogFile}</argument> <!-- output file that logs absolute paths for all bioc files generated -->
+						<argument>${inputIsList}</argument> <!--  if "list" then the input file should contain a list of files to process -->
 					</arguments>
 				</configuration>
 			</plugin>

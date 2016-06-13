@@ -8,8 +8,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.zip.GZIPInputStream;
 
 import javax.xml.bind.JAXBException;
@@ -23,6 +25,8 @@ import com.pengyifan.bioc.BioCPassage;
 import com.pengyifan.bioc.io.BioCCollectionReader;
 
 import edu.ucdenver.ccp.common.collections.CollectionsUtil;
+import edu.ucdenver.ccp.common.file.CharacterEncoding;
+import edu.ucdenver.ccp.common.file.FileReaderUtil;
 import edu.ucdenver.ccp.common.test.DefaultTestCase;
 import edu.ucdenver.ccp.medline.bioc.MedlineXml2BioC.OutputSegmentation;
 import edu.ucdenver.ccp.medline.xml.MedlineXmlParserTest;
@@ -55,12 +59,24 @@ public class MedlineXml2BioCTest extends DefaultTestCase {
 	public void testXml2BioCConversion() throws IOException, XMLStreamException, JAXBException {
 		File sampleMedlineXmlFile = copyClasspathResourceToTemporaryFile(MedlineXmlParserTest.class, SAMPLE_FILE_NAME);
 		File baseOutputDirectory = folder.newFolder();
+		File biocLogFile = folder.newFile();
 		MedlineXml2BioC.processMedlineXmlFile(sampleMedlineXmlFile, baseOutputDirectory,
-				OutputSegmentation.ONE_FILE_PER_PUBMED_ID);
+				OutputSegmentation.ONE_FILE_PER_PUBMED_ID, biocLogFile);
 
 		List<File> expectedOutputFileList = CollectionsUtil.createList(new File(baseOutputDirectory,
 				"10/787/10787327.bioc.xml.gz"), new File(baseOutputDirectory, "10/847/10847728.bioc.xml.gz"), new File(
 				baseOutputDirectory, "10/970/10970178.bioc.xml.gz"));
+
+		/* check that bioc log file contains expected absolute paths */
+		Set<String> biocPaths = new HashSet<String>(FileReaderUtil.loadLinesFromFile(biocLogFile,
+				CharacterEncoding.UTF_8));
+
+		Set<String> expectedBiocPaths = new HashSet<String>();
+		for (File f : expectedOutputFileList) {
+			expectedBiocPaths.add(f.getAbsolutePath());
+		}
+
+		assertEquals(expectedBiocPaths, biocPaths);
 
 		/* check that expected output files exist */
 		for (File f : expectedOutputFileList) {
@@ -101,7 +117,7 @@ public class MedlineXml2BioCTest extends DefaultTestCase {
 		File sampleMedlineXmlFile = copyClasspathResourceToTemporaryFile(MedlineXmlParserTest.class, SAMPLE_FILE_NAME);
 		File baseOutputDirectory = folder.newFolder();
 		MedlineXml2BioC.processMedlineXmlFile(sampleMedlineXmlFile, baseOutputDirectory,
-				OutputSegmentation.ONE_OUTPUT_FILE_PER_INPUT_XML_FILE);
+				OutputSegmentation.ONE_OUTPUT_FILE_PER_INPUT_XML_FILE, null);
 
 		List<File> expectedOutputFileList = CollectionsUtil.createList(new File(baseOutputDirectory,
 				"medline-xml-sample-2016.bioc.xml.gz"));

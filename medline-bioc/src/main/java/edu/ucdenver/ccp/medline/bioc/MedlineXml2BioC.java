@@ -1,9 +1,11 @@
 package edu.ucdenver.ccp.medline.bioc;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
 import javax.xml.bind.JAXBException;
@@ -18,7 +20,10 @@ import com.pengyifan.bioc.BioCDocument;
 import com.pengyifan.bioc.BioCPassage;
 import com.pengyifan.bioc.io.BioCCollectionWriter;
 
+import edu.ucdenver.ccp.common.file.CharacterEncoding;
+import edu.ucdenver.ccp.common.file.FileReaderUtil;
 import edu.ucdenver.ccp.common.file.FileUtil;
+import edu.ucdenver.ccp.common.file.FileWriterUtil;
 import edu.ucdenver.ccp.medline.core.PmidDirectoryFactory;
 import edu.ucdenver.ccp.medline.xml.MedlineCitationUtil;
 import edu.ucdenver.ccp.medline.xml.MedlineFileOrderer;
@@ -54,17 +59,26 @@ public class MedlineXml2BioC {
 	 *            documents. This two-level structure will be based on the
 	 *            PubMed ID of a given document. Output files are compressed
 	 *            using gzip.
+	 * @param biocLogFile
+	 *            a file that lists the absolute paths of all bioc files that
+	 *            have been generated from the input XML file. This is only used
+	 *            if the OutputSegmentation == ONE_FILE_PER_PUBMED_ID
 	 * @throws IOException
 	 * @throws XMLStreamException
 	 * @throws JAXBException
 	 */
 	public static void processMedlineXmlFile(File medlineXmlFile, File baseOutputDirectory,
-			OutputSegmentation outputSegmentation) throws IOException, XMLStreamException, JAXBException {
+			OutputSegmentation outputSegmentation, File biocLogFile) throws IOException, XMLStreamException,
+			JAXBException {
+
+		BufferedWriter biocFileLogger = null;
 
 		logger.info("BioC conversion in progress for: " + medlineXmlFile.getAbsolutePath());
 		BioCCollection multiPmidCollection = null;
 		if (outputSegmentation == OutputSegmentation.ONE_OUTPUT_FILE_PER_INPUT_XML_FILE) {
 			multiPmidCollection = new BioCCollection(BIOC_COLLECTION_SOURCE, medlineXmlFile.getName());
+		} else if (outputSegmentation == OutputSegmentation.ONE_FILE_PER_PUBMED_ID) {
+			biocFileLogger = FileWriterUtil.initBufferedWriter(biocLogFile);
 		}
 		int count = 0;
 		for (MedlineXmlParser parser = new MedlineXmlParser(medlineXmlFile); parser.hasNext();) {
@@ -101,6 +115,7 @@ public class MedlineXml2BioC {
 				singlePmidCollection.addDocument(document);
 				File outputDirectory = PmidDirectoryFactory.getDirectory(baseOutputDirectory, pmid);
 				File outputFile = new File(outputDirectory, pmid + ".bioc.xml.gz");
+				biocFileLogger.write(outputFile.getAbsolutePath() + "\n");
 				FileUtil.mkdir(outputFile.getParentFile());
 				OutputStream os = new GZIPOutputStream(new FileOutputStream(outputFile));
 				BioCCollectionWriter collectionWriter = new BioCCollectionWriter(os);
@@ -126,6 +141,9 @@ public class MedlineXml2BioC {
 			collectionWriter.close();
 		}
 
+		if (biocFileLogger != null) {
+			biocFileLogger.close();
+		}
 	}
 
 	/**
@@ -139,9 +157,10 @@ public class MedlineXml2BioC {
 	 * @throws JAXBException
 	 */
 	public static void processDirectoryOfMedlineXml(File directory, File baseOutputDirectory,
-			OutputSegmentation outputSegmentation) throws IOException, XMLStreamException, JAXBException {
+			OutputSegmentation outputSegmentation, File biocLogFile) throws IOException, XMLStreamException,
+			JAXBException {
 		for (File medlineXmlFile : MedlineFileOrderer.getOrderedMedlineFileIterable(directory)) {
-			processMedlineXmlFile(medlineXmlFile, baseOutputDirectory, outputSegmentation);
+			processMedlineXmlFile(medlineXmlFile, baseOutputDirectory, outputSegmentation, biocLogFile);
 		}
 	}
 
@@ -149,19 +168,40 @@ public class MedlineXml2BioC {
 	 * @param args
 	 *            args[0] = Medline XML file or directory to process<br>
 	 *            args[1] = base output directory to store BioC formatted files
-	 *            (1 per PubMed ID processed)
+	 *            (1 per PubMed ID processed) <br>
+	 *            args[2] = output segmentation <br>
+	 *            args[3] = bioc log file - a file that logs the absolute path
+	 *            for each generated bioc file <br>
+	 *            args[4] = <optional> "list" to signify that the first argument
+	 *            is a list of XML files to process
+	 * 
 	 */
 	public static void main(String[] args) {
 		BasicConfigurator.configure();
 		File input = new File(args[0]);
 		File baseOutputDirectory = new File(args[1]);
 		OutputSegmentation outputSegmentation = OutputSegmentation.valueOf(args[2]);
+		File biocLogFile = null;
+		if (outputSegmentation == OutputSegmentation.ONE_FILE_PER_PUBMED_ID) {
+			biocLogFile = new File(args[3]);
+		}
+		String inputDesignation = null;
+		if (args.length > 4) {
+			inputDesignation = args[4];
+		}
 
 		try {
-			if (input.isFile()) {
-				processMedlineXmlFile(input, baseOutputDirectory, outputSegmentation);
+			if (inputDesignation != null && inputDesignation.equals("list")) {
+				List<String> filesToProcess = FileReaderUtil.loadLinesFromFile(input, CharacterEncoding.UTF_8);
+				for (String fileToProcess : filesToProcess) {
+					processMedlineXmlFile(new File(fileToProcess), baseOutputDirectory, outputSegmentation, biocLogFile);
+				}
 			} else {
-				processDirectoryOfMedlineXml(input, baseOutputDirectory, outputSegmentation);
+				if (input.isFile()) {
+					processMedlineXmlFile(input, baseOutputDirectory, outputSegmentation, biocLogFile);
+				} else {
+					processDirectoryOfMedlineXml(input, baseOutputDirectory, outputSegmentation, biocLogFile);
+				}
 			}
 		} catch (IOException | XMLStreamException | JAXBException e) {
 			e.printStackTrace();

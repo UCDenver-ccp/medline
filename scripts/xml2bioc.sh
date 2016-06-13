@@ -39,6 +39,7 @@ while getopts "i:o:m:s:f:hl" OPTION; do
         ;;
         # if set, then the input is a list of files to process
         l) INPUT_IS_LIST="list"
+        ;;
         # HELP!
         h) print_usage; exit 0
         ;;

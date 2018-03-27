@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.ucdenver.ccp</groupId>
 	<artifactId>medline-parent</artifactId>
-	<version>2016.0-SNAPSHOT</version>
+	<version>2018.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>

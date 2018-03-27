@@ -14,6 +14,7 @@ import javax.xml.stream.XMLStreamException;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.medline.MedlineCitation;
+import org.medline.PubmedArticle;
 
 import com.pengyifan.bioc.BioCCollection;
 import com.pengyifan.bioc.BioCDocument;
@@ -85,9 +86,10 @@ public class MedlineXml2BioC {
 			if (count++ % 10000 == 0) {
 				logger.info("conversion progress: " + (count - 1));
 			}
-			MedlineCitation citation = parser.next();
+			PubmedArticle article = parser.next();
+			MedlineCitation citation = article.getMedlineCitation();
 			int pmid = Integer.parseInt(citation.getPMID().getvalue());
-			String title = citation.getArticle().getArticleTitle();
+			String title = citation.getArticle().getArticleTitle().getvalue();
 			String abstractText = MedlineCitationUtil.getAbstractText(citation);
 
 			BioCDocument document = new BioCDocument(Integer.toString(pmid));

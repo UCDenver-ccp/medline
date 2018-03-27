@@ -20,22 +20,32 @@ public class PubMedDateUtil {
 		switch (month) {
 		case "Jan":
 			return 1;
+		case "Win":
+			return 1;
 		case "Feb":
 			return 2;
 		case "Mar":
 			return 3;
+		case "Spr":
+			return 4;
 		case "Apr":
 			return 4;
 		case "May":
 			return 5;
 		case "Jun":
 			return 6;
+		case "Sum":
+			return 7;
 		case "Jul":
 			return 7;
 		case "Aug":
 			return 8;
 		case "Sep":
 			return 9;
+		case "Aut":
+			return 10;
+		case "Fal":
+			return 10;
 		case "Oct":
 			return 10;
 		case "Nov":
@@ -43,7 +53,8 @@ public class PubMedDateUtil {
 		case "Dec":
 			return 12;
 		default:
-			throw new IllegalArgumentException("Unhandled month: " + month);
+			logger.log(Level.WARNING, "Unhandled month string: " + month);
+			return 1;
 		}
 	}
 
@@ -60,7 +71,8 @@ public class PubMedDateUtil {
 		case "fall":
 			return 10;
 		default:
-			throw new IllegalArgumentException("Unhandled season: " + season);
+			logger.log(Level.WARNING, "Unhandled season string: " + season);
+			return 1;
 		}
 	}
 

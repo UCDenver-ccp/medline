@@ -13,7 +13,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<medline.project.version>2018.0</medline.project.version>
+		<medline.project.version>2019.0-SNAPSHOT</medline.project.version>
 	</properties>
 
 	<dependencies>

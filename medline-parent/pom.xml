@@ -19,13 +19,13 @@
 				<version>4.12</version>
 				<scope>test</scope>
 			</dependency>
-			<!-- http://svn.code.sf.net/p/bionlp/code/repo/edu/ucdenver/ccp/common/1.5.1 -->
+			<!-- https://svn.code.sf.net/p/bionlp/code/repo/edu/ucdenver/ccp/common/1.5.1 -->
 			<dependency>
 				<groupId>edu.ucdenver.ccp</groupId>
 				<artifactId>common</artifactId>
 				<version>1.5.1</version>
 			</dependency>
-			<!-- http://svn.code.sf.net/p/bionlp/code/repo/edu/ucdenver/ccp/common/1.5.1 -->
+			<!-- https://svn.code.sf.net/p/bionlp/code/repo/edu/ucdenver/ccp/common/1.5.1 -->
 			<dependency>
 				<groupId>edu.ucdenver.ccp</groupId>
 				<artifactId>common</artifactId>
@@ -39,7 +39,7 @@
 	<repositories>
 		<repository>
 			<id>bionlp-sourceforge</id>
-			<url>http://svn.code.sf.net/p/bionlp/code/repo/</url>
+			<url>https://svn.code.sf.net/p/bionlp/code/repo/</url>
 		</repository>
 	</repositories>
 

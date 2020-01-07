@@ -11,8 +11,11 @@ import java.util.zip.GZIPOutputStream;
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.core.config.DefaultConfiguration;
 import org.medline.MedlineCitation;
 import org.medline.PubmedArticle;
 
@@ -36,7 +39,7 @@ import edu.ucdenver.ccp.medline.xml.MedlineXmlParser;
  */
 public class MedlineXml2BioC {
 
-	private static final Logger logger = Logger.getLogger(MedlineXml2BioC.class);
+	private static final Logger logger = LogManager.getLogger(MedlineXml2BioC.class);
 
 	private static final String BIOC_COLLECTION_SOURCE = "medline";
 
@@ -179,7 +182,8 @@ public class MedlineXml2BioC {
 	 * 
 	 */
 	public static void main(String[] args) {
-		BasicConfigurator.configure();
+		Configurator.initialize(new DefaultConfiguration());
+	    Configurator.setRootLevel(Level.INFO);
 		File input = new File(args[0]);
 		File baseOutputDirectory = new File(args[1]);
 		OutputSegmentation outputSegmentation = OutputSegmentation.valueOf(args[2]);
